@@ -55,18 +55,18 @@ unsigned char read_reg_RX_PW_P4[1];
 unsigned char read_reg_RX_PW_P5[1];
 unsigned char read_reg_FIFO_STATUS[1];
 
-unsigned char clr_status[1]={0x70}; //clr status reg
+unsigned char clr_status[1]={0x70};  
 
-unsigned char rf_setupregister[1]={0b00000001};  //Data Rate -> '0' (1 Mbps) & PA_MIN
-unsigned char configregister[1]={0b00001110};  //CRC '1'-> (2 bytes)  & Power ON & Enable CRC
-unsigned char rf_chanregister[1]={0b01001100};  //Channel '1001100'
-unsigned char address[6]="00001";  //write to RX_ADDR_P0 and TX_ADDR
-unsigned char setup_retr_register[1]={0b01011111};  //retry values
+unsigned char rf_setupregister[1]={0b00000001};    
+unsigned char configregister[1]={0b00001110};  
+unsigned char rf_chanregister[1]={0b01001100};   
+unsigned char address[6]="00001";   
+unsigned char setup_retr_register[1]={0b01011111};   
 unsigned char en_aa_register[1]={0b00111111};
-unsigned char rx_pw_register[1]={0b00100000};  //RX_ payload width register -->32
+unsigned char rx_pw_register[1]={0b00100000};   
 
-void SCLK_Pulse (void);  //To create a clock pulse high low
-void Send_Bit (unsigned int value);     //For sending 1 or zero
+void SCLK_Pulse (void);   
+void Send_Bit (unsigned int value);      
 void CE_On (void);  //Chip enable
 void CE_Off (void);  //Chip disable
 void CSN_On (void);     //CSN On
@@ -165,9 +165,9 @@ void main(void)
     while(1){
         //STDBY-I
         CSN_Off();
-        Instruction_Byte_MSB_First(W_TX_PAYLOAD);  //send payload
+        Instruction_Byte_MSB_First(W_TX_PAYLOAD);   
         Write_Payload_MSB_First(payload,8);
-        Write_Payload_MSB_First(payload,8);  // to fill the 32 byte payload...!
+        Write_Payload_MSB_First(payload,8);   
         CSN_On();
         CE_On();
         __delay_cycles(50); //min pulse >10usec
@@ -179,7 +179,7 @@ void main(void)
         __delay_cycles(20000);
         //STDBY-I
         CSN_Off();
-        Instruction_Byte_MSB_First(NOP);  //to get the status reg..
+        Instruction_Byte_MSB_First(NOP);   
         CSN_On();
         if ((status_reg & BIT4) == 0x10){
                 CSN_Off();
