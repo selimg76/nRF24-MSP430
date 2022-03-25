@@ -1,6 +1,6 @@
 # nRF24-MSP430
 TRANSMITTER
-===========
+
 This repository includes the code (main.c and nrf24.h) for driving nRF24L01+ with an MSP430G2ET Launchpad (MSP430G2553) as Transmitter(TX).
 The Receiver(RX) is an Arduino Nano controlled nRF24L01+.
 Both the TX and RX code (RX-Arduino Code) are available in the repository. The Arduino code should include the following headers (nrf libraries should be installed)
