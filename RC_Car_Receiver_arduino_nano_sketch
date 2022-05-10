@@ -78,10 +78,7 @@ void loop() {
     // Set Motor B backward
     digitalWrite(in3, LOW);
     digitalWrite(in4, HIGH);
-//    food_servo_val = map(food_servo_val, 0, 1023, 0, 180);
-//    cam_servo_val = map(cam_servo_val, 0, 1023, 0, 180);
-//    myservo_food.write(food_servo_val); 
-//    myservo_cam.write(cam_servo_val); 
+
     delay(10);
   }
   else if (yAxis > 600) {
@@ -91,10 +88,7 @@ void loop() {
     // Set Motor B forward
     digitalWrite(in3, HIGH);
     digitalWrite(in4, LOW);
-//    food_servo_val = map(food_servo_val, 0, 1023, 0, 180);
-//    cam_servo_val = map(cam_servo_val, 0, 1023, 0, 180);
-//    myservo_food.write(food_servo_val); 
-//    myservo_cam.write(cam_servo_val); 
+
     delay(10);
   }
   // If joystick stays in middle the motors are not moving
@@ -116,10 +110,7 @@ void loop() {
   digitalWrite(in2, HIGH);
   digitalWrite(in3, LOW);
   digitalWrite(in4, HIGH);
-//  food_servo_val = map(food_servo_val, 0, 1023, 0, 180);
-//  cam_servo_val = map(cam_servo_val, 0, 1023, 0, 180);
-//  myservo_food.write(food_servo_val); 
-//  myservo_cam.write(cam_servo_val);
+
   delay(10);
   }
   if (xAxis > 600) {
@@ -127,10 +118,7 @@ void loop() {
   digitalWrite(in2, LOW);
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
-//  food_servo_val = map(food_servo_val, 0, 1023, 0, 180);
-//  cam_servo_val = map(cam_servo_val, 0, 1023, 0, 180);
-//  myservo_food.write(food_servo_val); 
-//  myservo_cam.write(cam_servo_val);
+
   delay(10);
   }
   }
