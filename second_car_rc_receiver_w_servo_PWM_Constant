@@ -1,0 +1,129 @@
+/*
+* RC Car receiver code written by drselim EXTENDED for Controlling 2 RC Cars, this is for second car. 
+* arduino nano & nrf24l01+ as receiver, 2 dc motors (no pwm) and 2 servos are controlled by the received values from the transmitter.
+* For details:
+* https://www.youtube.com/c/drselim 
+* last update 20/5/2022 for RC shield with msp430 (changed the direction HIGH and LOWs and x-y axis
+*/
+#include <Servo.h> 
+#include <SPI.h>
+#include <nRF24L01.h>
+#include <RF24.h>
+
+  
+#define in1 3
+#define in2 4
+#define in3 5
+#define in4 6
+#define enA 10
+#define enB 9
+
+RF24 radio(8, 7); // CE, CSN
+//const byte address[6] = "00001";
+const byte address[6] = "002nd"; //our second rc cars address
+
+int pwmspeed = 120;  //changed the upper layer of the RExx robot, increasing pwm from 90 to 120
+int motorSpeedA = 0;
+int motorSpeedB = 0;
+int xAxis;
+int yAxis;
+void setup() {
+  
+  pinMode(enA, OUTPUT);
+  pinMode(enB, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+
+  Serial.begin(9600);
+  radio.begin();
+  radio.openReadingPipe(0, address);
+  radio.setPALevel(RF24_PA_MIN);
+  radio.startListening();
+
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+  //digitalWrite(enA, LOW);  //we're not using the pwm for motors at the moment, but they're ready
+  //digitalWrite(enB, LOW);  //we're not using the pwm for motors at the moment, but they're ready
+}
+void loop() {
+  int dataToReceive[8];
+  if (radio.available()) {
+   
+    //char text[32] = "";
+    radio.read(&dataToReceive, sizeof(dataToReceive));
+    xAxis = dataToReceive[0];
+    yAxis = dataToReceive[1];
+   
+    String bosluk = " ";
+    String String_to_Print = dataToReceive[0] + bosluk + dataToReceive[1] + bosluk + dataToReceive[2] + bosluk + dataToReceive[3] + bosluk + dataToReceive[4] + bosluk + dataToReceive[5] + bosluk + dataToReceive[6] + bosluk + dataToReceive[7];
+//    String String_to_Print2 = "in1" + bosluk + digitalRead(in1) + bosluk + "in2" + bosluk + digitalRead(in2) + bosluk + "in3" + bosluk + digitalRead(in3) + bosluk + "in4" + bosluk + digitalRead(in4);   
+  Serial.println(String_to_Print);
+//  Serial.println(String_to_Print2);
+  //Serial.println(String(motorSpeedA) + bosluk + String(motorSpeedB));
+  delay(10);
+
+    
+    //DC motors
+  // Y-axis used for forward and backward control
+
+  if (yAxis < 400) {
+    analogWrite(enA, pwmspeed); 
+    analogWrite(enB, pwmspeed);
+    // Set Motor A backward
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+    // Set Motor B backward
+    digitalWrite(in3, LOW);
+    digitalWrite(in4, HIGH);
+
+    delay(10);
+  }
+  else if (yAxis > 600) {
+    analogWrite(enA, pwmspeed); 
+    analogWrite(enB, pwmspeed);
+    // Set Motor A forward
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
+    // Set Motor B forward
+    digitalWrite(in3, HIGH);
+    digitalWrite(in4, LOW);
+
+    delay(10);
+  }
+  // If joystick stays in middle the motors are not moving
+  else {
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+
+  delay(10);
+  }
+
+  // X-axis used for left and right control
+  if (xAxis < 400) {
+  analogWrite(enA, pwmspeed); 
+  analogWrite(enB, pwmspeed);
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+
+  delay(10);
+  }
+  if (xAxis > 600) {
+  analogWrite(enA, pwmspeed); 
+  analogWrite(enB, pwmspeed);
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+
+  delay(10);
+  }
+  }
+}
