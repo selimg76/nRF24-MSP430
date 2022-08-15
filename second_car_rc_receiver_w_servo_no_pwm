@@ -22,7 +22,7 @@ Servo myservo_food;
 Servo myservo_cam;
 RF24 radio(8, 7); // CE, CSN
 //const byte address[6] = "00001";
-const byte address[6] = "00025"; //our second rc car's address
+const byte address[6] = "002nd"; //our second rc car's address
 int food_servo_val;    
 int cam_servo_val;  
 
