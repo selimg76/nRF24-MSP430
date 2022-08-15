@@ -87,7 +87,7 @@ unsigned char configregister[1]={0b00001110};  //CRC '1'-> (2 bytes)  & Power ON
 unsigned char rf_chanregister[1]={0b01001100};  //Channel '1001100'
 unsigned char address[6]="00001";  //write to RX_ADDR_P0 and TX_ADDR
 
-unsigned char address2[6]="00025";  //second address for second CAR!!!
+unsigned char address2[6]="002nd";  //second address for second CAR!!!
 
 unsigned char setup_retr_register[1]={0b01011111};  //retry values
 unsigned char en_aa_register[1]={0b00111111};
